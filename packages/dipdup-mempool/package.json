@@ -1,0 +1,37 @@
+{
+  "name": "dipdup",
+  "version": "0.0.1",
+  "description": "DipDup SDK",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dipdup-net/dipdup.js.git"
+  },
+  "author": "Michael Zaikin <mz@baking-bad.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dipdup-net/dipdup.js/issues"
+  },
+  "homepage": "https://dipdup.net",
+  "devDependencies": {
+    "@gqless/cli": "^2.0.16",
+    "@types/jest": "^26.0.14",
+    "@types/node": "^14.11.5",
+    "eslint": "^7.10.0",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.4.1",
+    "ts-node": "^9.0.0",
+    "typedoc": "^0.20.32",
+    "typescript": "^4.3.2"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.3.20",
+    "@taquito/taquito": "^9.1.0",
+    "graphql": "^15.5.0",
+    "graphql-zeus": "^3.0.7"
+  },
+  "scripts": {
+    "codegen": "graphql-codegen --config codegen.yml"
+  }
+}

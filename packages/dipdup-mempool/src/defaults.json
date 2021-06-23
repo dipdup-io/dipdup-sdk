@@ -1,0 +1,5 @@
+{
+    "mainnet": {
+        "mempoolGraphQLEndpoint": "https://api.dipdup.net/mempool/graphql"
+    }
+}

@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "dist",
+    "strict": true,
+    "target": "es5",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "sourceMap": true
+  },
+  "include": ["packages"],
+  "typedocOptions": {
+    "src": [
+      "./packages",
+    ],
+    "mode": "file",
+    "includeDeclarations": true,
+    "out": "./docs",
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "excludeExternals": true,
+    "name": "DipDup SDK",
+    "ignoreCompilerErrors": true,
+    "plugin": "none",
+    "listInvalidSymbolLinks": true,
+  }
+}

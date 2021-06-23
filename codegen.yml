@@ -1,0 +1,10 @@
+overwrite: true
+generates:
+  ./packages/dipdup-mempool/types.ts:
+    schema: https://api.dipdup.net/mempool/graphql
+    documents: 'packages/dipdup-mempool/*.ts'
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-graphql-files-modules"
+      - "typescript-document-nodes"
