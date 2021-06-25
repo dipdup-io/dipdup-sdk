@@ -1,8 +1,8 @@
 overwrite: true
 generates:
-  ./packages/dipdup-mempool/types.ts:
+  src/types.ts:
     schema: https://api.dipdup.net/mempool/graphql
-    documents: 'packages/dipdup-mempool/*.ts'
+    documents: 'src/*.ts'
     plugins:
       - "typescript"
       - "typescript-operations"
