@@ -1,30 +1,27 @@
 <template>
   <div id="app">
-    <div v-if="transactions && transactions.length > 0">
-      <div v-for="tx in transactions" :key="tx.hash">
-        {{ tx.source }}
-        {{ tx.parameters.entrypoint }}
+    <div>
+      <div v-for="op in operations" :key="op.hash">
+        {{ op.hash }}
+        {{ op.kind }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { MempoolClient } from '@dipdup/mempool';
+import { createClient } from '@dipdup/mempool';
 
 export default {
   name: 'App',
-  apollo: {
-    transactions: {
-      query: MempoolClient.buildContractCallsQuery('KT1K4EwTpbvYN9agJdjpyJm4ZZdhpUNKB3F6'),
-      pollInterval: 1000,
-      update: data => data.mempool_transaction
-    }
-  },
   data: () => ({
     /*eslint no-unused-labels: "off"*/
-    transactions: []
-  })
+    operations: [],
+    client: null
+  }),
+  created: function() {
+    this.client = createClient();
+  }
 }
 </script>
 
