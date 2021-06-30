@@ -1,7 +1,7 @@
 {
-  "name": "@dipdup/metadata",
+  "name": "@dipdup/profiles",
   "version": "0.0.1",
-  "description": "DipDup metadata client",
+  "description": "Tezos Profiles client",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
@@ -22,6 +22,6 @@
     "graphql": "^15.5.0"
   },
   "scripts": {
-    "build": "genql --esm --endpoint https://api.dipdup.net/metadata/graphql --output ./dist"
+    "build": "genql --esm --endpoint https://indexer.tzprofiles.com/v1/graphql --output ./dist"
   }
 }

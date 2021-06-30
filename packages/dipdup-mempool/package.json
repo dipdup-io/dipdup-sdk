@@ -8,7 +8,7 @@
     "type": "git",
     "url": "git+https://github.com/dipdup-net/dipdup.js.git"
   },
-  "author": "Michael Zaikin <mz@baking-bad.org>",
+  "author": "GenQL <genql.vercel.app>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/dipdup-net/dipdup.js/issues"
