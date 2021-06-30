@@ -3,18 +3,42 @@ import { createClient, everything } from '@dipdup/mempool';
 
 export default function useMempool() {
     const client = createClient({
+        url: "https://api.dipdup.net/mempool/graphql",
         subscription: {
             url: "wss://api.dipdup.net/mempool/graphql"
         }
     });
 
     const transactions = ref([]);
+
+    const update = function(data) {
+        data.forEach(tx => {
+            const item = transactions.value.find(it => it.hash === tx.hash);
+            if (item) {
+                Object.assign(item, tx);
+            } else {
+                transactions.value.push(tx);
+            }
+        })
+    };
+
     const subscription = ref({});
 
     const subscribe = function (contract) {
         unsubscribe();
+        transactions.value.splice(0, transactions.value.length);
 
         const now = parseInt(new Date().getTime() / 1000) - 3600;
+
+        client.chain.query
+            .mempool_transaction({
+                where: { 
+                    destination: { _eq: contract },
+                    created_at: { _gt: now }
+                }
+            })
+            .get({ ...everything })
+            .then(update)
 
         subscription.value = client.chain.subscription
             .mempool_transaction({
@@ -24,16 +48,7 @@ export default function useMempool() {
                 }
             })
             .get({ ...everything })
-            .subscribe({
-                next: data => data.forEach(tx => {
-                    const item = transactions.value.find(it => it.hash === tx.hash);
-                    if (item) {
-                        Object.assign(item, tx);
-                    } else {
-                        transactions.value.push(tx);
-                    }
-                })
-            })
+            .subscribe({ next: update })
     };
 
     const unsubscribe = function() {
