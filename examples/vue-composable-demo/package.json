@@ -1,13 +1,14 @@
 {
-  "name": "vue-composable",
+  "name": "@dipdup/vue-composable-demo",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "demo": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@dipdup/mempool": "^0.0.1",
     "@vue/composition-api": "^1.0.0-rc.12",
     "buefy": "^0.9.8",
     "bulma": "^0.9.3",
