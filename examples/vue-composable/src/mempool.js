@@ -3,7 +3,6 @@ import { createClient, everything } from '@dipdup/mempool';
 
 export default function useMempool() {
     const client = createClient({
-        url: "https://api.dipdup.net/mempool/graphql",
         subscription: {
             url: "wss://api.dipdup.net/mempool/graphql"
         }
@@ -29,16 +28,6 @@ export default function useMempool() {
         transactions.value.splice(0, transactions.value.length);
 
         const now = parseInt(new Date().getTime() / 1000) - 3600;
-
-        client.chain.query
-            .mempool_transaction({
-                where: { 
-                    destination: { _eq: contract },
-                    created_at: { _gt: now }
-                }
-            })
-            .get({ ...everything })
-            .then(update)
 
         subscription.value = client.chain.subscription
             .mempool_transaction({
