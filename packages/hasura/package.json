@@ -1,0 +1,40 @@
+{
+  "name": "@dipdup/hasura",
+  "version": "0.0.1",
+  "description": "Dead simple Hasura client",
+  "main": "dist/lib/index.js",
+  "types": "dist/types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dipdup-net/dipdup.js.git"
+  },
+  "author": "Michael Zaikin <mz@baking-bad.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dipdup-net/dipdup.js/issues"
+  },
+  "homepage": "https://dipdup.net",
+  "devDependencies": {
+    "@types/isomorphic-fetch": "^0.0.35",
+    "@types/jest": "^26.0.14",
+    "@types/node": "^14.11.5",
+    "@types/ws": "^7.4.5",
+    "eslint": "^7.10.0",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.4.1",
+    "ts-node": "^9.0.0",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-config-standard": "^9.0.0",
+    "typedoc": "^0.20.32",
+    "typescript": "^4.3.2"
+  },
+  "dependencies": {
+    "isomorphic-fetch": "^3.0.0",
+    "subscriptions-transport-ws": "^0.9.19"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts'"
+  }
+}
