@@ -1,6 +1,5 @@
 {
   "name": "@dipdup/vue-composable-demo",
-  "version": "0.1.0",
   "private": true,
   "scripts": {
     "demo": "vue-cli-service serve --open",

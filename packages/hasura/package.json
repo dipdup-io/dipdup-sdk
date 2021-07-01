@@ -1,7 +1,6 @@
 {
   "name": "@dipdup/hasura",
   "private": true,
-  "version": "0.0.0",
   "description": "Dead simple Hasura client",
   "main": "dist/lib/index.js",
   "types": "dist/types/index.d.ts",

@@ -1,7 +1,6 @@
 {
   "name": "@dipdup/opgflow",
   "private": true,
-  "version": "0.0.0",
   "description": "Client for the DipDup mempool indexer",
   "main": "dist/lib/index.js",
   "types": "dist/types/index.d.ts",
