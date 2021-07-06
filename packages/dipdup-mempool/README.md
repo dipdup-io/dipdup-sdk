@@ -1,6 +1,6 @@
 # Mempool GQL client
 
-[![npm version](https://badge.fury.io/js/@dipdup/mempool.svg)](https://www.npmjs.com/package/@dipdup/mempool)
+[![npm version](https://badge.fury.io/js/%40dipdup%2Fmempool.svg)](https://badge.fury.io/js/%40dipdup%2Fmempool)
 [![Made With](https://img.shields.io/badge/made%20with-dipdup-blue.svg?)](https://dipdup.net)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -32,7 +32,7 @@ const client = createClient({
 import { everything } from '@dipdup/mempool'
 
 client.chain.query
-    .mempool_transaction({
+    .transaction({
         where: { 
             destination: { _eq: 'KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' }
         },
@@ -46,7 +46,7 @@ client.chain.query
 
 ```js
 const { unsubscribe } = client.chain.subscription
-    .mempool_transaction({
+    .transaction({
         where: { 
             destination: { _eq: 'KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton' }
         }

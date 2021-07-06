@@ -30,7 +30,7 @@ export default function useMempool() {
         const now = parseInt(new Date().getTime() / 1000) - 3600;
 
         subscription.value = client.chain.subscription
-            .mempool_transaction({
+            .transaction({
                 where: { 
                     destination: { _eq: contract },
                     created_at: { _gt: now }
