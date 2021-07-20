@@ -1,4 +1,4 @@
-# DipDup.js
+# DipDup
 
 A collection of packages simpifying DipDup integration.
 
