@@ -56,3 +56,8 @@ const { unsubscribe } = client.chain.subscription
         next: txs => console.log
     })
 ```
+
+## Examples
+
+Check out demo apps using Mempool SDK:
+* [Vue2 + composition API](../../examples/mempool-vue-composable)
