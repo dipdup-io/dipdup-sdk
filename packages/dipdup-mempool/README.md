@@ -19,7 +19,7 @@ First of all you need to create an instance of mempool client:
 import { createClient } from '@dipdup/mempool'
 
 const client = createClient({
-    url: 'http://api.dipdup.net/mempool/graphql',
+    url: 'https://api.dipdup.net/mempool/graphql',
     subscription: {
         url: "wss://api.dipdup.net/mempool/graphql"
     }
@@ -45,6 +45,8 @@ client.chain.query
 #### Subscription (live query)
 
 ```js
+import { everything } from '@dipdup/mempool'
+
 const { unsubscribe } = client.chain.subscription
     .transaction({
         where: { 
@@ -53,7 +55,7 @@ const { unsubscribe } = client.chain.subscription
     })
     .get({ ...everything })
     .subscribe({
-        next: txs => console.log
+        next: (tx) => console.log(tx),
     })
 ```
 
