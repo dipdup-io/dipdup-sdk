@@ -18,12 +18,17 @@ export class Client {
     private connection: signalR.HubConnection;
     private subscriptions: Set<Subscription<any>>;
 
-    constructor(config: Config) {
+    constructor({ url, lazy = true, reconnect = true }: Config) {
         this.subscriptions = new Set<Subscription<any>>();
 
-        this.connection = new signalR.HubConnectionBuilder()
-            .withUrl(config.url)
-            .build();
+        let builder = new signalR.HubConnectionBuilder().withUrl(url);
+        if (reconnect) {
+            /** TODO: set custom intervals
+             *  By default, the client will wait 0, 2, 10 and 30 seconds respectively before trying up to 4 reconnect attempts.
+             */
+            builder = builder.withAutomaticReconnect();
+        }
+        this.connection = builder.build();
 
         let self = this;
         this.connection.on(CHANNEL.HEAD, (message: State) => {
@@ -39,17 +44,43 @@ export class Client {
             self.onBigMapUpdates(message);
         });
 
-        if (!config.lazy && !this.isConnected()) {
-            this.connection.start().catch(err => console.log(err));
+        if (reconnect) {
+            this.connection.onreconnected(async () => {
+                self.subscriptions.forEach(async s => await this.connection.invoke(s.method));
+            })
+        }
+
+        if (!lazy) {
+            this.connection.start().catch(error => { throw new Error(error) });
         }
     }
 
-
-    public stop() {
-        if (this.isConnected()) {
-            this.connection.stop().catch(err => console.log(err));
+    public async start(): Promise<void> {
+        switch (this.connection.state) {
+            case signalR.HubConnectionState.Disconnected: {
+                await this.connection.start();
+                break;
+            }
+            case signalR.HubConnectionState.Connected: break;
+            default: throw new Error(`Intermediate connection hub state: ${this.connection.state}`);
         }
-        this.subscriptions.clear();
+    }
+
+    public async stop() {
+        switch (this.connection.state) {
+            case signalR.HubConnectionState.Disconnected: break;
+            case signalR.HubConnectionState.Connected: {
+                await this.connection.stop();
+                this.subscriptions.forEach(sub => {
+                    if (sub.observer.complete) {
+                        sub.observer.complete();
+                    }
+                });
+                this.subscriptions.clear();
+                break;
+            }
+            default: throw new Error(`Intermediate connection hub state: ${this.connection.state}`);
+        }
     }
 
     /*
@@ -57,9 +88,7 @@ export class Client {
      */
     public head(): Observable<State> {
         return new Observable<State>(observer => {
-            this.createSubscription<State>(CHANNEL.HEAD, observer)
-                .then(f => { return f })
-                .catch(observer.error.bind(observer));
+            return this.createSubscription<State>(CHANNEL.HEAD, observer);
         })
     }
 
@@ -68,9 +97,7 @@ export class Client {
      */
     public blocks(): Observable<Block> {
         return new Observable<Block>(observer => {
-            this.createSubscription<Block>(CHANNEL.BLOCKS, observer)
-                .then(f => { return f })
-                .catch(observer.error.bind(observer));
+            return this.createSubscription<Block>(CHANNEL.BLOCKS, observer);
         })
     }
 
@@ -79,9 +106,7 @@ export class Client {
      */
     public operations(params?: OperationParameters): Observable<OperationTypes> {
         return new Observable<OperationTypes>(observer => {
-            this.createSubscription<OperationTypes>(CHANNEL.OPERATIONS, observer, params)
-                .then(f => { return f })
-                .catch(observer.error.bind(observer));
+            return this.createSubscription<OperationTypes>(CHANNEL.OPERATIONS, observer, params);
         })
     }
 
@@ -90,38 +115,35 @@ export class Client {
      */
     public bigmaps(params?: BigMapParameters): Observable<BigMapUpdate> {
         return new Observable<BigMapUpdate>(observer => {
-            this.createSubscription<BigMapUpdate>(CHANNEL.BIGMAPS, observer, params)
-                .then(f => { return f })
-                .catch(observer.error.bind(observer));
+            return this.createSubscription<BigMapUpdate>(CHANNEL.BIGMAPS, observer, params);
         })
     }
 
-    private async createSubscription<Type>(channel: CHANNEL, observer: ZenObservable.Observer<Type>, params?: Params): Promise<() => void> {
-        if (!this.isConnected()) {
-            await this.connection.start();
-        }
-
-        let subscription = new Subscription<Type>(channel, observer, params);
-        await this.connection.invoke(subscription.method);
+    private createSubscription<Type>(channel: CHANNEL, observer: ZenObservable.Observer<Type>, params?: Params): () => void {
+        const subscription = new Subscription<Type>(channel, observer, params);
         this.subscriptions.add(subscription);
 
-        return () =>
+        this.connection.start()
+            .then(() => this.connection.invoke(subscription.method))
+            .catch(error => { throw new Error(error) });
+
+        return () => {
             this.subscriptions.delete(subscription);
+            if (subscription.observer.complete) {
+                subscription.observer.complete();
+            }
+        }
     }
 
     private handle(channel: CHANNEL, items: Array<ResponseTypes>) {
         items.forEach(item => {
             this.subscriptions.forEach(s => {
-                if (s.isOwner(channel, item)) {
-                    s.observer.next!(item)
+                if (s.observer.next && s.isOwner(channel, item)) {
+                    s.observer.next(item)
                 }
             })
 
         }, this);
-    }
-
-    private isConnected(): boolean {
-        return this.connection && this.connection.state === signalR.HubConnectionState.Connected;
     }
 
     private onHead(head: State) {

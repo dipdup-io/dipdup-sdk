@@ -149,9 +149,10 @@ export class BigMapParameters {
     }
 }
 
-export interface Config {
-    readonly url: string;
-    readonly lazy?: boolean;
+export type Config = {
+    url: string;
+    lazy?: boolean;
+    reconnect?: boolean;
 }
 
 export enum BIGMAPTAG {
@@ -200,11 +201,11 @@ export type ResponseTypes = State | Block | OperationTypes | BigMapUpdate;
 export type Params = OperationParameters | BigMapParameters;
 
 export function checkParams(params: Params, item: ResponseTypes): boolean {
-    let operationsParams = (params as OperationParameters)
+    const operationsParams = (params as OperationParameters)
     if (operationsParams.address || operationsParams.types) {
         return operationsParams.is(item as OperationTypes);
     }
-    let bigmapsParams = (params as BigMapParameters)
+    const bigmapsParams = (params as BigMapParameters)
     if (bigmapsParams.contract || bigmapsParams.ptr || bigmapsParams.path || bigmapsParams.tags) {
         return bigmapsParams.is(item as BigMapUpdate);
     }
