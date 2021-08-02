@@ -15,6 +15,11 @@ import {
     Block
 } from '@dipdup/tzkt-api'
 
+export interface Message {
+    type: number;
+    state: number;
+    data?: ResponseTypes;
+}
 
 export type OperationTypes = ActivationOperation | BallotOperation | DelegationOperation | DoubleBakingOperation | DoubleEndorsingOperation | EndorsementOperation | NonceRevelationOperation | OriginationOperation | ProposalOperation | RevealOperation | TransactionOperation;
 

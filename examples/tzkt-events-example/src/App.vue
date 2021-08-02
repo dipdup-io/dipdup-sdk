@@ -14,7 +14,8 @@
         </div>
       </div>
       <div class="column is-half is-offset-one-quarter">
-        {{ response }}
+        <p>Event: {{ event }}</p>
+        <p>Response: {{ response }}</p>
       </div>
     </div>
   </div>
@@ -28,6 +29,7 @@ export default {
   name: "App",
   setup() {
     let response = ref({});
+    let event = ref({});
     let client = new Client({
       url: "https://api.florencenet.tzkt.io/v1/events",
       lazy: true,
@@ -41,6 +43,12 @@ export default {
           response.value = x;
         },
       });
+      client.events().subscribe({
+        next: (e) => {
+          console.log(e);
+          event.value = e;
+        }
+      })
     };
 
     const unsubscribeFromHead = async function () {
@@ -51,6 +59,7 @@ export default {
       subscribeToHead,
       unsubscribeFromHead,
       response,
+      event
     };
   },
 };
