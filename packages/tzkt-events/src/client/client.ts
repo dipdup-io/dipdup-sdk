@@ -10,7 +10,7 @@ import {
     channelToMethod,
     checkParams
 } from './types';
-import { State, Block, BigMapUpdate } from '@dipdup/tzkt-api';
+import { State, Block, BigMapUpdate, Operation, TransactionOperation } from '@dipdup/tzkt-api';
 import Observable from "zen-observable";
 
 
@@ -21,9 +21,12 @@ export class Client {
     constructor(config: Config) {
         this.subscriptions = new Set<Subscription<any>>();
 
-        this.connection = new signalR.HubConnectionBuilder()
-            .withUrl(config.url)
-            .build();
+        let builder = new signalR.HubConnectionBuilder()
+            .withUrl(config.url);
+        if (config.reconnect) {
+            builder.withAutomaticReconnect();
+        }
+        this.connection = builder.build();
 
         let self = this;
         this.connection.on(CHANNEL.HEAD, (message: State) => {

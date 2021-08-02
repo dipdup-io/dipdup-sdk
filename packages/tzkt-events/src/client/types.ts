@@ -152,6 +152,7 @@ export class BigMapParameters {
 export interface Config {
     readonly url: string;
     readonly lazy?: boolean;
+    readonly reconnect?: boolean;
 }
 
 export enum BIGMAPTAG {
