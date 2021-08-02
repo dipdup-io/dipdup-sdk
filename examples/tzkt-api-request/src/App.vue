@@ -19,14 +19,15 @@
 
 <script>
 import { ref } from '@vue/composition-api';
-import { AccountsService } from '@dipdup/tzkt-api'
+import { AccountsService, DefaultApiOptions } from '@dipdup/tzkt-api'
 
 export default {
   name: 'App',
   setup() {
     let response = ref({})
     const sendRequest = async function() {
-      response.value = await AccountsService.accountsGet({
+      let service = new AccountsService(DefaultApiOptions);
+      response.value = await service.accountsGet({
         kind: {
             eq: 'smart_contract'
         },
