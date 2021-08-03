@@ -11,7 +11,7 @@ import {
     channelToMethod,
     checkParams
 } from './types';
-import { State, Block, BigMapUpdate, Operation, TransactionOperation } from '@dipdup/tzkt-api';
+import { State, Block, BigMapUpdate } from '@dipdup/tzkt-api';
 import Observable from "zen-observable";
 
 
@@ -25,6 +25,7 @@ export class Client {
         this.subscriptions = new Set<Subscription<any>>();
 
         let builder = new signalR.HubConnectionBuilder()
+            .configureLogging(signalR.LogLevel.Error)
             .withUrl(config.url);
         if (config.reconnect) {
             builder.withAutomaticReconnect();
@@ -47,6 +48,9 @@ export class Client {
 
         this.networkEvents = new Observable<Event>(observer => {
             this.eventObserver = observer;
+            return () => {
+                this.eventObserver = undefined;
+            }
         })
 
         if (!config.lazy && !this.isConnected()) {
@@ -116,7 +120,12 @@ export class Client {
         }
 
         let subscription = new Subscription<Type>(channel, observer, params);
-        await this.connection.invoke(subscription.method);
+        try {
+            await this.connection.invoke(subscription.method, params);
+        }
+        catch (err) {
+            observer.error!(err);
+        }
         this.subscriptions.add(subscription);
 
         return () =>
@@ -188,6 +197,7 @@ export interface SubscriptionMessage<Type> {
 
 export enum EventType {
     Init = 0,
+    Data = 1,
     Reorg = 2
 }
 
