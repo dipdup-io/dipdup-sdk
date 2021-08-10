@@ -1,14 +1,14 @@
 export { 
-    Client, 
+    EventsService, 
     SubscriptionMessage,
-    Event,
-    EventType
-} from './client/client';
+} from './client';
 export { 
-    Config, 
+    EventsConfig, 
     OperationTypes, 
     OperationKind, 
     OperationParameters as OperationSubscriptionParameters, 
     BigMapParameters as BigMapSubscriptionParameters, 
-    BigMapTag 
-} from './client/types';
+    BigMapTag,
+    Event,
+    EventType
+} from './types';

@@ -9,6 +9,9 @@
                 >Subscribe</b-button
               >
               <b-button @click="unsubscribeFromHead()">Unsubscribe</b-button>
+              <b-taglist class="mb-0">
+                <b-tag v-if="status" type="is-primary is-light" size="is-medium">{{ status }}</b-tag>
+              </b-taglist>
             </div>
           </div>
         </div>
@@ -23,16 +26,16 @@
 
 <script>
 import { ref } from "@vue/composition-api";
-import { Client } from "@dipdup/tzkt-events";
+import { EventsService } from "@dipdup/tzkt-events";
 
 export default {
   name: "App",
   setup() {
-    let response = ref({});
-    let event = ref({});
-    let client = new Client({
-      url: "https://api.florencenet.tzkt.io/v1/events",
-      lazy: true,
+    const response = ref({});
+    const event = ref({});
+    const status = ref('Disconnected');
+    const client = new EventsService({
+      url: "https://api.florencenet.tzkt.io/v1/events"
     });
 
     let observer = null;
@@ -48,7 +51,13 @@ export default {
           console.log(e);
           event.value = e;
         }
-      })
+      });
+      client.status().subscribe({
+        next: (s) => { 
+          console.log(s);
+          status.value = s;
+        }
+      });
     };
 
     const unsubscribeFromHead = async function () {
@@ -59,7 +68,8 @@ export default {
       subscribeToHead,
       unsubscribeFromHead,
       response,
-      event
+      event,
+      status
     };
   },
 };

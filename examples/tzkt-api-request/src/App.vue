@@ -26,8 +26,8 @@ export default {
   setup() {
     let response = ref({})
     const sendRequest = async function() {
-      let service = new AccountsService(DefaultApiOptions);
-      response.value = await service.accountsGet({
+      let accounts = new AccountsService(DefaultApiOptions);
+      response.value = await accounts.get({
         kind: {
             eq: 'smart_contract'
         },

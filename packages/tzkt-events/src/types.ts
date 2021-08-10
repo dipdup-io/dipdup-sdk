@@ -15,13 +15,33 @@ import {
     Block
 } from '@dipdup/tzkt-api'
 
-export interface Message {
-    type: number;
+export enum EventType {
+    Init = 0,
+    Data = 1,
+    Reorg = 2
+}
+
+export interface Event {
+    type: EventType;
     state: number;
+}
+
+export interface Message extends Event {
     data?: ResponseTypes;
 }
 
-export type OperationTypes = ActivationOperation | BallotOperation | DelegationOperation | DoubleBakingOperation | DoubleEndorsingOperation | EndorsementOperation | NonceRevelationOperation | OriginationOperation | ProposalOperation | RevealOperation | TransactionOperation;
+export type OperationTypes = 
+    ActivationOperation | 
+    BallotOperation | 
+    DelegationOperation | 
+    DoubleBakingOperation | 
+    DoubleEndorsingOperation | 
+    EndorsementOperation | 
+    NonceRevelationOperation | 
+    OriginationOperation | 
+    ProposalOperation | 
+    RevealOperation | 
+    TransactionOperation;
 
 export class OperationParameters {
     readonly address?: string;
@@ -154,10 +174,9 @@ export class BigMapParameters {
     }
 }
 
-export interface Config {
+export interface EventsConfig {
     readonly url: string;
-    readonly lazy?: boolean;
-    readonly reconnect?: boolean;
+    readonly reconnect: boolean;
 }
 
 export enum BIGMAPTAG {
@@ -200,17 +219,28 @@ export function channelToMethod(channel: CHANNEL): METHOD {
 }
 
 export type BigMapTag = BIGMAPTAG.METADATA | BIGMAPTAG.TOKEN_METADATA;
-export type OperationKind = 'transaction' | 'origination' | 'delegation' | 'reveal' | 'double_baking' | 'double_endorsing' | 'nonce_revelation' | 'activation' | 'proposal' | 'ballot' | 'endorsement';
+export type OperationKind = 
+    'transaction' | 
+    'origination' | 
+    'delegation' | 
+    'reveal' | 
+    'double_baking' | 
+    'double_endorsing' | 
+    'nonce_revelation' | 
+    'activation' | 
+    'proposal' | 
+    'ballot' | 
+    'endorsement';
 
 export type ResponseTypes = State | Block | OperationTypes | BigMapUpdate;
 export type Params = OperationParameters | BigMapParameters;
 
-export function checkParams(params: Params, item: ResponseTypes): boolean {
-    let operationsParams = (params as OperationParameters)
+export function paramsMatch(params: Params, item: ResponseTypes): boolean {
+    const operationsParams = (params as OperationParameters)
     if (operationsParams.address || operationsParams.types) {
         return operationsParams.is(item as OperationTypes);
     }
-    let bigmapsParams = (params as BigMapParameters)
+    const bigmapsParams = (params as BigMapParameters)
     if (bigmapsParams.contract || bigmapsParams.ptr || bigmapsParams.path || bigmapsParams.tags) {
         return bigmapsParams.is(item as BigMapUpdate);
     }
