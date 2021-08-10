@@ -1,7 +1,7 @@
 {
   "name": "@dipdup/profiles",
   "version": "0.0.1",
-  "description": "Tezos Profiles client",
+  "description": "GQL client for Tezos profiles API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
