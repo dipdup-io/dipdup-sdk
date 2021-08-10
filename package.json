@@ -7,5 +7,10 @@
   "workspaces": [
     "packages/*",
     "examples/*"
-  ]
+  ],
+  "dependencies": {
+    "@microsoft/signalr": "^5.0.8",
+    "@types/node": "^16.4.5",
+    "zen-observable": "^0.8.15"
+  }
 }
