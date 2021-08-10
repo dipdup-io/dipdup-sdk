@@ -6,7 +6,7 @@ A collection of packages simpifying Tezos dapps development.
 
 | Name                | Description                      | NPM                                                            |
 | ------------------- | -------------------------------- | -------------------------------------------------------------- |
-| @dipdup/mempool     | GQL client for Tezos mempool API | [![npm version](https://badge.fury.io/js/%40dipdup%mempool.svg)](https://badge.fury.io/js/%40dipdup%2Fmempool) |
+| @dipdup/mempool     | GQL client for Tezos mempool API | [![npm version](https://badge.fury.io/js/%40dipdup%2Fmempool.svg)](https://badge.fury.io/js/%40dipdup%2Fmempool) |
 | @dipdup/metadata    | GQL client for Tezos contract&token metadata API | [![npm version](https://badge.fury.io/js/%40dipdup%2Fmetadata.svg)](https://badge.fury.io/js/%40dipdup%2Fmetadata) |
 | @dipdup/profiles    | GQL client for Tezos profiles API | [![npm version](https://badge.fury.io/js/%40dipdup%2Fprofiles.svg)](https://badge.fury.io/js/%40dipdup%2Fprofiles) |
 | @dipdup/opgflow     | Persistent mempool client tracking the operation upon the inclusion | [![npm version](https://badge.fury.io/js/%40dipdup%2Fopgflow.svg)](https://badge.fury.io/js/%40dipdup%2Fopgflow) |
