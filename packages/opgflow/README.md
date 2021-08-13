@@ -15,4 +15,4 @@ yarn add @dipdup/opgflow
 ## Examples
 
 Check out demo apps using OPGFlow:
-* [Vue2 + composition API](../../examples/opgflow-vue-composable)
+* [Vue2 + composition API](https://github.com/dipdup-net/dipdup-ts/tree/master/examples/opgflow-vue-composable)

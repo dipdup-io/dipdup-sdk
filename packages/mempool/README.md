@@ -62,4 +62,4 @@ const { unsubscribe } = client.chain.subscription
 ## Examples
 
 Check out demo apps using Mempool SDK:
-* [Vue2 + composition API](../../examples/mempool-vue-composable)
+* [Vue2 + composition API](https://github.com/dipdup-net/dipdup-ts/tree/master/examples/mempool-vue-composable)
