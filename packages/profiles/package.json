@@ -23,6 +23,5 @@
   },
   "scripts": {
     "build": "genql --esm --endpoint https://indexer.tzprofiles.com/v1/graphql --output ./dist"
-  },
-  "gitHead": "a2938207e7f1214d8569f43b4e84937b32bb1d9b"
+  }
 }

@@ -1,7 +1,7 @@
 {
-  "name": "@dipdup/mempool",
-  "version": "0.0.2",
-  "description": "GQL client for Tezos mempool API",
+  "name": "@dipdup/domains",
+  "version": "0.0.1",
+  "description": "GQL client for Tezos domains API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
@@ -22,6 +22,6 @@
     "graphql": "^15.5.0"
   },
   "scripts": {
-    "build": "genql --esm --endpoint https://api.dipdup.net/mempool/graphql --output ./dist"
+    "build": "genql --esm --endpoint https://domains.dipdup.net/v1/graphql --output ./dist"
   }
 }
