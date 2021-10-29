@@ -1,6 +1,10 @@
 {
   "name": "root",
   "private": true,
+  "scripts": {
+    "lerna:bootstrap": "lerna bootstrap",
+    "lerna:build": "lerna run build"
+  },
   "devDependencies": {
     "lerna": "^4.0.0"
   },
@@ -12,5 +16,8 @@
     "@microsoft/signalr": "^5.0.8",
     "@types/node": "^16.4.5",
     "zen-observable": "^0.8.15"
+  },
+  "engines": {
+    "node": ">=14.18.1"
   }
 }

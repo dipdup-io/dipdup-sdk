@@ -16,20 +16,22 @@ A collection of packages simpifying Tezos dapps development.
 
 ## Build
 
-First of all, make sure you have __node 14+__, __yarn__, and __lerna__ globally installed:
+First of all, make sure you have **node 14+** and **yarn** globally installed:
+
+If you are using nvm node manager you can do:
 
 ```
-yarn global add lerna
+nvm use
 ```
 
 Install all the dependencies (across all packages) and link packages between themselves (if any internal dependenciess):
 
 ```
-lerna bootstrap
+yarn lerna:bootstrap
 ```
 
 Build all the packages/examples:
 
 ```
-lerna run build
+yarn lerna:build
 ```
