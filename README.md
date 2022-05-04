@@ -1,4 +1,11 @@
-# DipDup
+# DipDup [DEPRECATED]
+
+This repo is no longer used, here are the new locations:
+* https://github.com/tzkt/api-sdk-ts (@tzkt/sdk-api, @tzkt/sdk-events)
+* https://github.com/dipdup-net/mempool (@dipdup/mempool)
+* https://github.com/dipdup-net/metadata (@dipdup/metadata)
+* https://github.com/dipdup-net/tezos-domains (@dipdup/domains)
+* https://github.com/dipdup-net/quartz-metadata (@dipdup/quartz
 
 A collection of packages simpifying Tezos dapps development.
 
